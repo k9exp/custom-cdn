@@ -1,0 +1,12 @@
+- name: Install NGINX on all VMs
+  hosts: azure_vms
+  become: yes
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install NGINX
+      apt:
+        name: nginx
+        state: present

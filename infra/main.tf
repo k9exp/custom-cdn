@@ -2,7 +2,7 @@ terraform {
     required_providers {
         azurerm = {
             source = "hashicorp/azurerm"
-            version = "~> 3.0.2"
+            version = "3.110.0"
         }
     }
 
@@ -32,6 +32,38 @@ resource "azurerm_virtual_network" "custom-cdn" {
     resource_group_name = azurerm_resource_group.custom-cdn.name
 }
 
+resource "azurerm_network_security_group" "custom-cdn" {
+    for_each = var.vm_map
+
+    name = "${ each.value.name }-NSG"
+    location = each.value.location
+    resource_group_name = azurerm_resource_group.custom-cdn.name
+
+    security_rule {
+        name = "HTTP"
+        priority = 100
+        direction = "Inbound"
+        access = "Allow"
+        protocol = "Tcp"
+        source_port_range = "*"
+        destination_port_range = "80"
+        source_address_prefix = "*"
+        destination_address_prefix = "*"
+    }
+
+    security_rule {
+        name = "HTTPS"
+        priority = 110
+        direction = "Inbound"
+        access = "Allow"
+        protocol = "Tcp"
+        source_port_range = "*"
+        destination_port_range = "443"
+        source_address_prefix = "*"
+        destination_address_prefix = "*"
+    }
+}
+
 resource "azurerm_subnet" "custom-cdn" {
     for_each = var.vm_map
 
@@ -39,6 +71,13 @@ resource "azurerm_subnet" "custom-cdn" {
     resource_group_name = azurerm_resource_group.custom-cdn.name
     virtual_network_name = azurerm_virtual_network.custom-cdn[each.key].name  
     address_prefixes = [ "10.0.1.0/24" ]
+}
+
+resource "azurerm_subnet_network_security_group_association" "custom-cdn" {
+    for_each = var.vm_map
+
+    subnet_id = azurerm_subnet.custom-cdn[each.key].id
+    network_security_group_id = azurerm_network_security_group.custom-cdn[each.key].id
 }
 
 resource "azurerm_public_ip" "custom-cdn" {
@@ -63,6 +102,7 @@ resource "azurerm_network_interface" "custom-cdn" {
         public_ip_address_id = azurerm_public_ip.custom-cdn[each.key].id
         private_ip_address_allocation = "Dynamic"
     }
+
 }
 
 resource "azurerm_virtual_machine" "custom-cdn" {

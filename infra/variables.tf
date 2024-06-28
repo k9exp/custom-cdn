@@ -51,7 +51,3 @@ variable "vm_map" {
   }
 }
 
-variable "domain_name" {
-	type = string
-	default = "cdn.kunals.me"
-}
