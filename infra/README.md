@@ -2,6 +2,12 @@
 
 Blog Link: https://kunalsin9h.com/blog/content-delivery-network
 
+Required Tools:
+
+    - Ansible
+    - Terraform
+    - sshpass
+
 Login with Azure
 
 ```bash

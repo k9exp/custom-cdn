@@ -1,0 +1,41 @@
+- name: Install NGINX on all VMs
+  hosts: azure_vms
+  become: yes
+  vars:
+    domain_name: cdn.kunals.me
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+    
+    - name: Create a new contents directory
+      file:
+        path: /home/custom-cdn/contents
+        state: directory
+        mode: "0755"
+
+    - name: Install NGINX
+      apt:
+        name: nginx
+        state: present
+
+    - name: Create NGINX configuration for new domain
+      template:
+        src: nginx.conf
+        dest: /etc/nginx/sites-available/{{ domain_name }}.conf
+      notify:
+        - Restart NGINX
+
+    - name: Enable new NGINX site
+      file:
+        src: /etc/nginx/sites-available/{{ domain_name }}.conf
+        dest: /etc/nginx/sites-enabled/{{ domain_name }}.conf
+        state: link
+      notify:
+        - Restart NGINX
+
+  handlers:
+    - name: Restart NGINX
+      service:
+        name: nginx
+        state: restarted
