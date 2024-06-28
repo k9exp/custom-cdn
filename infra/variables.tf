@@ -29,5 +29,24 @@ variable "vm_map" {
 		location = "Australia Central"
 		size = "Standard_B1s"
 	}
+
+
+	"vm5" = {
+		name = "japanwest"
+		location = "Japan West"
+		size = "Standard_B1s"
+	}
+
+	"vm6" = {
+		name = "southafricanorth"
+		location = "South Africa North"
+		size = "Standard_B1s"
+	}
+
+	"vm7" = {
+		name = "brazilsouth"
+		location = "Brazil South"
+		size = "Standard_B1s"
+	}
   }
 }
