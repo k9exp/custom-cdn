@@ -34,7 +34,7 @@ variable "vm_map" {
 	"vm5" = {
 		name = "japanwest"
 		location = "Japan West"
-		size = "Standard_B1s"
+		size = "Standard_B2s"
 	}
 
 	"vm6" = {
