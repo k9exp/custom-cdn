@@ -32,9 +32,9 @@ variable "vm_map" {
 
 
 	"vm5" = {
-		name = "japanwest"
-		location = "Japan West"
-		size = "Standard_B2s"
+		name = "japaneast"
+		location = "Japan East"
+		size = "Standard_B1s"
 	}
 
 	"vm6" = {
@@ -49,4 +49,9 @@ variable "vm_map" {
 		size = "Standard_B1s"
 	}
   }
+}
+
+variable "domain_name" {
+	type = string
+	default = "cdn.kunals.me"
 }
