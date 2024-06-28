@@ -18,6 +18,15 @@
       apt:
         name: nginx
         state: present
+      
+    - name: Set user in nginx.conf
+      lineinfile:
+        path: /etc/nginx/nginx.conf
+        regexp: '^user'
+        line: 'user custom-cdn;'
+        backrefs: yes
+      notify:
+        - Restart NGINX
 
     - name: Create NGINX configuration for new domain
       template:
@@ -33,9 +42,15 @@
         state: link
       notify:
         - Restart NGINX
+        - Reload NGINX
 
   handlers:
     - name: Restart NGINX
       service:
         name: nginx
         state: restarted
+
+    - name: Reload NGINX
+      service:
+        name: nginx
+        state: reloaded
