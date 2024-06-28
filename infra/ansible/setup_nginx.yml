@@ -19,7 +19,7 @@
     - name: Install NGINX
       apt:
         name: nginx
-        state: present
+        state: latest
       
     - name: Set user in nginx.conf
       lineinfile:

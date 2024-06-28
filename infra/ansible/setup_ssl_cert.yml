@@ -1,0 +1,23 @@
+- name: Setup SSL Certificates
+  hosts: azure_vms
+  become: yes
+  vars:
+    domain_name: cdn.kunals.me
+    admin_email: email@exaple.com
+  tasks:
+    - name: Update apt cache
+      apt: 
+        update_cache: yes
+
+    - name: Ensure Snapd is installed
+      apt:
+        name: snapd
+        state: present
+      
+    - name: Install certbot 
+      shell:
+        cmd: snap install --classic certbot
+    
+    - name: Install Certificates
+      shell:
+        cmd: certbot --nginx -m {{ admin_email }} -d {{ domain_name }} --agree-tos --non-interactive
