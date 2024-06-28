@@ -1,0 +1,9 @@
+- name: Transfer files using scp
+  hosts: azure_vms
+  vars:
+    file_path: null # Path to the file you want to transfer
+  tasks:
+    - name: SCP file to VM
+      shell:
+        cmd: sshpass -p {{ ansible_ssh_pass }} scp {{ file_path }} {{ ansible_user }}@{{ ansible_host }}:/home/custom-cdn/contents
+      delegate_to: localhost

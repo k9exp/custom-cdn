@@ -13,6 +13,8 @@
         path: /home/custom-cdn/contents
         state: directory
         mode: "0755"
+        owner: custom-cdn
+        group: custom-cdn
 
     - name: Install NGINX
       apt:
