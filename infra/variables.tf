@@ -12,22 +12,22 @@ variable "vm_map" {
 		size = "Standard_B1s"
     }
 
-	# "vm2" = {
-	# 	name = "centralus"
-	# 	location = "Central US"
-	# 	size = "Standard_B1s"
-	# }
+	"vm2" = {
+		name = "centralus"
+		location = "Central US"
+		size = "Standard_B1s"
+	}
 
-	# "vm3" = {
-	# 	name = "westeurope"
-	# 	location = "West Europe"
-	# 	size = "Standard_B1s"
-	# }
+	"vm3" = {
+		name = "westeurope"
+		location = "West Europe"
+		size = "Standard_B1s"
+	}
 
-	# "vm4" = {
-	# 	name = "australiacentral"
-	# 	location = "Australia Central"
-	# 	size = "Standard_B1s"
-	# }
+	"vm4" = {
+		name = "australiacentral"
+		location = "Australia Central"
+		size = "Standard_B1s"
+	}
   }
 }
